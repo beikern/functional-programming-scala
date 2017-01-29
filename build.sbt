@@ -1,9 +1,18 @@
-lazy val `functional-programming-scala` =
-  project.in(file(".")).enablePlugins(AutomateHeaderPlugin, GitVersioning)
 
-libraryDependencies ++= Vector(
-  Library.scalaTest % "test"
-)
+lazy val root =
+  project.in(file("."))
+    .aggregate(`getting-started`)
 
-initialCommands := """|import es.beikern.functional.programming.scala._
-                      |""".stripMargin
+lazy val `getting-started` =
+  project.in(file("getting-started"))
+      .settings(
+        initialCommands := """|import es.beikern.functional.programming._
+                              |""".stripMargin,
+        libraryDependencies ++= Vector(
+          Library.scalaTest % "test"
+        )
+      )
+    .enablePlugins(AutomateHeaderPlugin, GitVersioning)
+
+name := "root"
+
