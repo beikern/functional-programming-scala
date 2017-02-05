@@ -15,14 +15,17 @@
  */
 
 package es.beikern.functional.programming.app
-
 import es.beikern.functional.programming.datastructures.{ Cons, List }
 import es.beikern.functional.programming.datastructures.List._
 import es.beikern.functional.programming.datastructures.Nil
 
+import scala.util.{ Failure, Success, Try }
+
 object Main extends App {
 
   /*
+   * Exercise 3.1
+   *
    * What will be the result of the following match expression?
    * My response: 3
    *
@@ -31,11 +34,27 @@ object Main extends App {
    * Third case MATCH!
    * Fourth case: Third case matched first, so this will not match.
    */
-  val result = List(1, 2, 3, 4, 5) match {
+  val resultPatternMatching = List(1, 2, 3, 4, 5) match {
     case Cons(x, Cons(2, Cons(4, _)))          => x
     case Nil                                   => 42
     case Cons(x, Cons(y, Cons(3, Cons(4, _)))) => x + y
     case Cons(h, t)                            => h + sum(t)
   }
-  println(s"the X result is 3 right? ${ assert(result == 3); result }")
+  println(s"the result is 3 right? ${ assert(resultPatternMatching == 3); resultPatternMatching }")
+
+  val resultTailNonEmptyList = List(1, 2, 3, 4, 5).tail
+  println(s"The result should be Cons(2, Cons(3, Cons(4, Cons(5, Nil)))). Result: ${
+    assert(Cons(2, Cons(3, Cons(4, Cons(5, Nil)))) == resultTailNonEmptyList); resultTailNonEmptyList
+  }")
+
+  Try {
+    List().tail
+  } match {
+    case Success(_) =>
+      println("WHAT! Why this happened! What sorcery is this?!")
+    case Failure(ex: UnsupportedOperationException) =>
+      println(s"Exception UnsupportedOperationException throwed as expected")
+    case Failure(_) =>
+      println(s"WHAT! (again, yep) this is not the expected error!")
+  }
 }

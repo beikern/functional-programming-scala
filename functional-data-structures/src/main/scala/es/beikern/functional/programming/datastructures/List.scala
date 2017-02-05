@@ -16,9 +16,26 @@
 
 package es.beikern.functional.programming.datastructures
 
-sealed trait List[+A]
-case object Nil                             extends List[Nothing]
-case class Cons[+A](head: A, tail: List[A]) extends List[A]
+sealed trait List[+A] {
+  /*
+   * Exercise 3.2
+   *
+   * Implement the function tail for removing the first element of a List. Note that the function takes constant time. What are
+   * different choices you could make in your implementation if the List is Nil? We'll return to this question in the next chapter.
+   *
+   * Answer: This implementation throws an exception. We can return an Optional or even Nil
+   * This method is here instead of the companion because it sucks to call tail like this: List.tail(List(1,2,3,4)), this is a better
+   * place for it
+   */
+  def tail: List[A] = {
+    this match {
+      case Cons(_, t) => t
+      case Nil        => throw new UnsupportedOperationException("tail of empty list!")
+    }
+  }
+}
+case object Nil                       extends List[Nothing]
+case class Cons[+A](h: A, t: List[A]) extends List[A]
 
 object List {
   def sum(ints: List[Int]): Int = ints match {
