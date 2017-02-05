@@ -63,4 +63,8 @@ object Main extends App {
 
   val dropElemList = List(1, 2, 3, 4, 5).drop(2)
   println(s"The result dropElemList should be ${ assert(Cons(3, Cons(4, Cons(5, Nil))) == dropElemList); dropElemList }")
+
+  val dropWhileList = List(1, 2, 3, 4).dropWhile(_ < 3)
+  println(s"The result dropWhileList should be ${ assert(Cons(3, Cons(4, Nil)) == dropWhileList); dropWhileList }")
+
 }

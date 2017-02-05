@@ -68,6 +68,20 @@ sealed trait List[+A] {
     go(n, this)
   }
 
+  /*
+   * Exercise 3.5
+   * Implement dropWhile, which removes elements from the List prefix as long as they match a predicate
+   */
+  def dropWhile(f: A => Boolean): List[A] = {
+    def go(l: List[A]): List[A] = {
+      l match {
+        case Cons(h, t) if f(h) => go(t)
+        case x                  => x
+      }
+    }
+    go(this)
+  }
+
 }
 case object Nil                       extends List[Nothing]
 case class Cons[+A](h: A, t: List[A]) extends List[A]
