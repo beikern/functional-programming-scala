@@ -76,10 +76,9 @@ object Main extends App {
    * función anónima y de ahí voy tirando del hilo
    */
 
-  def curry[A, B, C](f: (A, B) => C): A => (B => C) = {
-    (a: A) => {
-      (b: B) =>
-        f(a,b)
+  def curry[A, B, C](f: (A, B) => C): A => (B => C) = { (a: A) =>
+    { (b: B) =>
+      f(a, b)
     }
   }
 
@@ -91,8 +90,8 @@ object Main extends App {
    * función anónima y de ahí voy tirando del hilo
    */
 
-  def uncurry[A, B, C](f: A => B => C): (A, B) => C  = {
-    (a: A, b: B) => {
+  def uncurry[A, B, C](f: A => B => C): (A, B) => C = { (a: A, b: B) =>
+    {
       f(a)(b)
     }
   }
@@ -102,8 +101,7 @@ object Main extends App {
    * La clave está en seguir los tipos, es decir, ¿Qué me pide la función destino? pues empiezo escribiendo eso como entrada de mi
    * función anónima y de ahí voy tirando del hilo
    */
-  def compose[A, B, C] (f: B => C, g: A => B): A => C = {
-    (a: A) =>
-      f(g(a))
+  def compose[A, B, C](f: B => C, g: A => B): A => C = { (a: A) =>
+    f(g(a))
   }
 }
