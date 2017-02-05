@@ -57,4 +57,7 @@ object Main extends App {
     case Failure(_) =>
       println(s"WHAT! (again, yep) this is not the expected error!")
   }
+
+  val x = List(1, 2).setHead(3)
+  println(x)
 }

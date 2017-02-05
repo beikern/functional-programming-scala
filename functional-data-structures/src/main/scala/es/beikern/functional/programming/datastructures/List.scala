@@ -33,6 +33,18 @@ sealed trait List[+A] {
       case Nil        => throw new UnsupportedOperationException("tail of empty list!")
     }
   }
+
+  /*
+   * Exercise 3.3 Using the same idea, implement the function setHead for replacing the first element of a List with a different
+   * value.
+   */
+  def setHead[B >: A](e: B): List[B] = {
+    this match {
+      case Cons(h, t) => Cons(e, Cons(h, t))
+      case Nil        => Cons(e, Nil)
+    }
+  }
+
 }
 case object Nil                       extends List[Nothing]
 case class Cons[+A](h: A, t: List[A]) extends List[A]
