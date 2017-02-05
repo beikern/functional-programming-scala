@@ -43,7 +43,7 @@ object Main extends App {
   println(s"the result is 3 right? ${ assert(resultPatternMatching == 3); resultPatternMatching }")
 
   val resultTailNonEmptyList = List(1, 2, 3, 4, 5).tail
-  println(s"The result should be Cons(2, Cons(3, Cons(4, Cons(5, Nil)))). Result: ${
+  println(s"The result resultTailNonEmptyList should be Cons(2, Cons(3, Cons(4, Cons(5, Nil)))). Result: ${
     assert(Cons(2, Cons(3, Cons(4, Cons(5, Nil)))) == resultTailNonEmptyList); resultTailNonEmptyList
   }")
 
@@ -58,6 +58,9 @@ object Main extends App {
       println(s"WHAT! (again, yep) this is not the expected error!")
   }
 
-  val x = List(1, 2).setHead(3)
-  println(x)
+  val setHeadToList = List(1, 2).setHead(3)
+  println(s"The result setHeadToList should be ${ assert(Cons(3, Cons(1, Cons(2, Nil))) == setHeadToList); setHeadToList }")
+
+  val dropElemList = List(1, 2, 3, 4, 5).drop(2)
+  println(s"The result dropElemList should be ${ assert(Cons(3, Cons(4, Cons(5, Nil))) == dropElemList); dropElemList }")
 }

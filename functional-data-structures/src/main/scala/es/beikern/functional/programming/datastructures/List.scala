@@ -16,6 +16,8 @@
 
 package es.beikern.functional.programming.datastructures
 
+import scala.annotation.tailrec
+
 sealed trait List[+A] {
   /*
    * Exercise 3.2
@@ -35,7 +37,9 @@ sealed trait List[+A] {
   }
 
   /*
-   * Exercise 3.3 Using the same idea, implement the function setHead for replacing the first element of a List with a different
+   * Exercise 3.3
+   *
+   * Using the same idea, implement the function setHead for replacing the first element of a List with a different
    * value.
    */
   def setHead[B >: A](e: B): List[B] = {
@@ -43,6 +47,25 @@ sealed trait List[+A] {
       case Cons(h, t) => Cons(e, Cons(h, t))
       case Nil        => Cons(e, Nil)
     }
+  }
+
+  /*
+   * Exercise 3.4
+   *
+   * Generalize tail to the function drop, which removes the first n elements from a list.
+   * Note that this function takes time proportional only to the number of elements being dropped - we don't need to make a copy
+   * of the entire List.
+   */
+  def drop(n: Int): List[A] = {
+    @tailrec
+    def go(i: Int, l: List[A]): List[A] = {
+      i match {
+        case 0                                => l
+        case lessThanZero if lessThanZero < 0 => throw new IllegalArgumentException("Elements to drop should be greater than 0")
+        case other                            => go(i - 1, l.tail)
+      }
+    }
+    go(n, this)
   }
 
 }
