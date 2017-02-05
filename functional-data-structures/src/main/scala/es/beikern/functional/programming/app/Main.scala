@@ -21,6 +21,7 @@ import es.beikern.functional.programming.datastructures.Nil
 
 import scala.util.{ Failure, Success, Try }
 
+// TODO beikern: This should be Scala Tests! not a dirty main :/ Refactor ASAP.
 object Main extends App {
 
   /*
@@ -66,5 +67,8 @@ object Main extends App {
 
   val dropWhileList = List(1, 2, 3, 4).dropWhile(_ < 3)
   println(s"The result dropWhileList should be ${ assert(Cons(3, Cons(4, Nil)) == dropWhileList); dropWhileList }")
+
+  val initList = List(1, 2, 3, 4).init
+  println(s"The result initList should be ${ assert(Cons(1, Cons(2, Cons(3, Nil))) == initList); initList }")
 
 }

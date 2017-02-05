@@ -70,13 +70,48 @@ sealed trait List[+A] {
 
   /*
    * Exercise 3.5
+   *
    * Implement dropWhile, which removes elements from the List prefix as long as they match a predicate
    */
   def dropWhile(f: A => Boolean): List[A] = {
+    @tailrec
     def go(l: List[A]): List[A] = {
       l match {
         case Cons(h, t) if f(h) => go(t)
         case x                  => x
+      }
+    }
+    go(this)
+  }
+
+  def addToTail[B >: A](a: B): List[B] = {
+    def go(l: List[B]): List[B] = {
+      l match {
+        case Cons(h, t) => go(t).setHead(h)
+        case Nil        => Nil.setHead(a)
+      }
+    }
+    go(this)
+  }
+  /*
+   * Exercise 3.6
+   *
+   * Not everything works out so nicely. Implement a function, init, that returns a List consisting of all but the last element
+   * of a List. So, given List(1,2,3,4), init will return List(1,2,3). Why can't this function be implemented in constant time
+   * like tail?
+   *
+   * We are implementing here a linked list. To remove the last element we have to iterate over n-1 elements, so it is linear
+   * time, not constant.
+   *
+   * WARNING: This implementation is not tail recursive! it can overflow the stack if the list is big enough!
+   */
+  def init: List[A] = {
+    def go(l: List[A]): List[A] = {
+      l match {
+        case Cons(p, Cons(u, Nil)) => Nil.setHead(p)
+        case Cons(h, Nil)          => Nil
+        case Cons(h, t)            => go(t).setHead(h)
+        case Nil                   => throw new UnsupportedOperationException("List has to have at least one element")
       }
     }
     go(this)
