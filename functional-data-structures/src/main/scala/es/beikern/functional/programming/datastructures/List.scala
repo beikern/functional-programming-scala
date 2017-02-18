@@ -117,6 +117,140 @@ sealed trait List[+A] {
     go(this)
   }
 
+  def foldRight[B](z: B)(f: (A, B) => B): B = {
+    def go(as: List[A], z: B): B = {
+      as match {
+        case Nil         => z
+        case Cons(x, xs) => f(x, go(xs, z))
+      }
+    }
+    go(this, z)
+  }
+
+  /*
+   * Exercise 3.9
+   *
+   * Compute the length of a list using foldRight
+   */
+  def length: Int = {
+    foldRight(0)((_, b) => b + 1)
+  }
+
+  /*
+   * Exercise 3.10
+   * Our implementation of foldRight is not tail-recursive and will result in StackOverFlowError for large lists (we say is not
+   * stack-safe). Convince yourself that this is the case , an then write another general list-recursion function, foldLef, that
+   * is tail-recursive, using the techniques er discussed the previous chapter. Here is its signature
+   */
+  def foldLeft[B](z: B)(f: (B, A) => B): B = {
+    @tailrec
+    def go(as: List[A], z: B): B = {
+      as match {
+        case Nil         => z
+        case Cons(x, xs) => go(xs, f(z, x))
+      }
+    }
+    go(this, z)
+  }
+
+  /*
+   * Write sum, product and a function to compute the length of a list using foldLeft
+   */
+
+  def lengthFoldLeft: Int = {
+    foldLeft(0)((a, _) => a + 1)
+  }
+
+  def sumFoldLeft[B >: A](implicit num: Numeric[B]): B = {
+    foldLeft[B](num.zero)((b, a) => num.plus(b, a))
+  }
+
+  def productFoldLeft[B >: A](implicit num: Numeric[B]): B = {
+    foldLeft[B](num.fromInt(1))((b, a) => num.times(b, a))
+  }
+
+  /*
+   * Write a function that returns the reverse of a list (given List(1,2,3) it returns List (3,2,1)). See if you can write it using a fold
+   */
+  def reverse: List[A] = {
+    foldLeft(List[A]())((b, a) => b.setHead(a))
+  }
+
+  /*
+   * Write a function filter that removes elements form a list unless they satisfy a given predicate. Use it to remove all odd
+   * numbers from a List[Int]
+   */
+  def filter(f: A => Boolean): List[A] = {
+    foldLeft(List[A]())((b, a) =>
+      if(f(a)){
+        b
+      }
+      else {
+        b.setHead(a)
+      }
+    )
+  }
+
+  def concat[B >: A](as: List[B]): List[B] = {
+    def go (l: List[B], acc: List[B]): List[B] ={
+      l match {
+        case Cons(h, t) =>
+          go(t, acc.addToTail(h))
+        case Nil => acc
+      }
+    }
+    go(as, this)
+  }
+
+  /*
+   * Write a function flatMap that works like map except that the function given will return a list instead of a single result, and
+   * that list should be inserted into de final resulting list.
+   */
+  def flatMap[B](f: A => List[B]): List[B] = {
+    foldLeft(List[B]())((b, a) => b.concat(f(a))
+    )
+  }
+
+  /*
+   * Write a function map that generalizes modifying each element in a list white maintaining the structure of the list. Here is its signature
+   */
+  def map[B](f: A => B): List[B] = {
+    foldLeft(List[B]())((b, a) => b.setHead(f(a))).reverse
+  }
+
+  def filterUsingFlatMap(f: A => Boolean): List[A] = {
+    flatMap(
+      a =>
+        if (f(a)) {
+          Nil
+        } else {
+          List(a)
+        }
+    )
+  }
+
+  def head: A = {
+    this match {
+      case Cons(h,_) => h
+      case Nil => throw new UnsupportedOperationException
+    }
+  }
+
+  /*
+   * Local mutation, ugly...
+   */
+  def zipWith[B >: A](as: List[B], f: (A, B) => B): List[B] = {
+    var l = as
+    var h = l.head
+    foldLeft(List[B]())(
+      (b, a) => {
+        h = l.head
+        l = l.drop(1)
+        b.setHead(f(a,h))
+      }
+    ).reverse
+  }
+
 }
 case object Nil                       extends List[Nothing]
 case class Cons[+A](h: A, t: List[A]) extends List[A]

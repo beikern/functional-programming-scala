@@ -53,7 +53,7 @@ object Main extends App {
   } match {
     case Success(_) =>
       println("WHAT! Why this happened! What sorcery is this?!")
-    case Failure(ex: UnsupportedOperationException) =>
+    case Failure(_: UnsupportedOperationException) =>
       println(s"Exception UnsupportedOperationException throwed as expected")
     case Failure(_) =>
       println(s"WHAT! (again, yep) this is not the expected error!")
@@ -71,4 +71,39 @@ object Main extends App {
   val initList = List(1, 2, 3, 4).init
   println(s"The result initList should be ${ assert(Cons(1, Cons(2, Cons(3, Nil))) == initList); initList }")
 
+  val foldRightList = List(1, 2, 3, 4).foldRight(0)((a, b) => b + a)
+  println(s"The sum result is ${ assert(foldRightList == 10); foldRightList }")
+
+  val lengthList = List('a', 'b', 'c', 'd', 'e').length
+  println(s"The length is ${ assert(lengthList == 5); lengthList }")
+
+  val sumList = List(1,2,3,4,5).sumFoldLeft
+  println(s" The sum using sumFoldLeft is ${assert(sumList == 15); sumList}")
+
+  val lengthFoldLeftList = List(1,2,3,4,5).lengthFoldLeft
+  println(s" The length using lengthFoldLeft is ${assert(lengthFoldLeftList == 5); lengthFoldLeftList}")
+
+  val productList = List(1,2,3,4,5).productFoldLeft
+  println(s" The length using productFoldLeft is ${assert(productList == 120); productList}")
+
+  val reverseList = List(1,2,3,4).reverse
+  println(s"The list reversed is $reverseList")
+
+  val mapList: List[String] = List(1,2,3,4).map(_.toString.concat("_wololo"))
+  println(s"The list mapped to List[String] is $mapList")
+
+  val filterList: List[Int] = List(1,2,3,4).filter(_ % 2 == 1)
+  println(s"The list filtered is $filterList")
+
+  val concatList: List[Int] = List(1,2,3,4).concat(List(1,2,3,4))
+  println(s"Concat result: $concatList")
+
+  val flatmaplist = List(1,2,3).flatMap(i => List(i,i))
+  println (s"flatmap result = $flatmaplist")
+
+  val filterUsingFlatMapList = List(1,2,3,4).filterUsingFlatMap(_ % 2 == 1)
+  println(s"The list filtered using flatmap is $filterUsingFlatMapList")
+
+  val zipWith = List(1,2,3,4).zipWith(List(1,2,3,4), _+_)
+  println(s"zipWithResult = $zipWith")
 }
