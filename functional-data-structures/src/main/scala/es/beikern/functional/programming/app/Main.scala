@@ -15,11 +15,10 @@
  */
 
 package es.beikern.functional.programming.app
-import es.beikern.functional.programming.datastructures.{ Cons, List }
+import es.beikern.functional.programming.datastructures.{Branch, Cons, Leaf, List, Nil, Tree}
 import es.beikern.functional.programming.datastructures.List._
-import es.beikern.functional.programming.datastructures.Nil
 
-import scala.util.{ Failure, Success, Try }
+import scala.util.{Failure, Success, Try}
 
 // TODO beikern: This should be Scala Tests! not a dirty main :/ Refactor ASAP.
 object Main extends App {
@@ -106,4 +105,60 @@ object Main extends App {
 
   val zipWith = List(1,2,3,4).zipWith(List(1,2,3,4), _+_)
   println(s"zipWithResult = $zipWith")
+
+  /*
+   *  +----------------------+
+   *  |     Example Tree     |
+   *  |                      |
+   *  |           º          |
+   *  |           |          |
+   *  |       +-------+      |
+   *  |       |       |      |
+   *  |   +---º---+   +      |
+   *  |   |       |   3      |
+   *  |   +       +          |
+   *  |   1       2          |
+   *  +----------------------+
+   *
+   */
+
+  val tree1 = Tree(Branch(Branch(Leaf(1), Leaf(2)), Leaf(3)))
+
+  val treeSize = tree1.size
+  println(s"the tree size (nodes + leafs) is $treeSize")
+
+  val treeMax = tree1.maximum
+  println(s"the tree maximum is ${assert(treeMax == 3); treeMax}")
+
+  /*
+   *  +--------------------------------+
+   *  |        Example Tree  2         |
+   *  |                                |
+   *  |                    º           |
+   *  |                    |           |
+   *  |                +---+---+       |
+   *  |                |       |       |
+   *  |            +---º---+   3       |
+   *  |            |       |           |
+   *  |            +       2           |
+   *  |        +---º---+               |
+   *  |        |       |               |
+   *  |    +---º---+   4               |
+   *  |    |       |                   |
+   *  |    5       6                   |
+   *  |                                |
+   *  +--------------------------------+
+   *
+   */
+  val tree2 = Tree(Branch(Branch(Branch(Branch(Leaf(5),Leaf(6)),Leaf(4)), Leaf(2)), Leaf(3)))
+
+  val treeMaxDepth = tree2.depth
+  println(s"the tree maximum depth is ${assert(treeMaxDepth == 5); treeMaxDepth}")
+
+  val mappedTree = tree1.map(_+1)
+  println(s"the mapped tree is $mappedTree")
+
+
+  val treeSizeFold = tree1.sizeFold
+  println(s"the tree size (nodes + leafs) sizeFold is $treeSizeFold")
 }
