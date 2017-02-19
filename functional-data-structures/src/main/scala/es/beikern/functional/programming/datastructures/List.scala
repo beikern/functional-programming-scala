@@ -182,17 +182,15 @@ sealed trait List[+A] {
    */
   def filter(f: A => Boolean): List[A] = {
     foldLeft(List[A]())((b, a) =>
-      if(f(a)){
+      if (f(a)) {
         b
-      }
-      else {
+      } else {
         b.setHead(a)
-      }
-    )
+    })
   }
 
   def concat[B >: A](as: List[B]): List[B] = {
-    def go (l: List[B], acc: List[B]): List[B] ={
+    def go(l: List[B], acc: List[B]): List[B] = {
       l match {
         case Cons(h, t) =>
           go(t, acc.addToTail(h))
@@ -207,8 +205,7 @@ sealed trait List[+A] {
    * that list should be inserted into de final resulting list.
    */
   def flatMap[B](f: A => List[B]): List[B] = {
-    foldLeft(List[B]())((b, a) => b.concat(f(a))
-    )
+    foldLeft(List[B]())((b, a) => b.concat(f(a)))
   }
 
   /*
@@ -225,14 +222,14 @@ sealed trait List[+A] {
           Nil
         } else {
           List(a)
-        }
+      }
     )
   }
 
   def head: A = {
     this match {
-      case Cons(h,_) => h
-      case Nil => throw new UnsupportedOperationException
+      case Cons(h, _) => h
+      case Nil        => throw new UnsupportedOperationException
     }
   }
 
@@ -246,7 +243,7 @@ sealed trait List[+A] {
       (b, a) => {
         h = l.head
         l = l.drop(1)
-        b.setHead(f(a,h))
+        b.setHead(f(a, h))
       }
     ).reverse
   }

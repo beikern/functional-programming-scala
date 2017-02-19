@@ -15,10 +15,10 @@
  */
 
 package es.beikern.functional.programming.app
-import es.beikern.functional.programming.datastructures.{Branch, Cons, Leaf, List, Nil, Tree}
+import es.beikern.functional.programming.datastructures.{ Branch, Cons, Leaf, List, Nil, Tree }
 import es.beikern.functional.programming.datastructures.List._
 
-import scala.util.{Failure, Success, Try}
+import scala.util.{ Failure, Success, Try }
 
 // TODO beikern: This should be Scala Tests! not a dirty main :/ Refactor ASAP.
 object Main extends App {
@@ -76,34 +76,34 @@ object Main extends App {
   val lengthList = List('a', 'b', 'c', 'd', 'e').length
   println(s"The length is ${ assert(lengthList == 5); lengthList }")
 
-  val sumList = List(1,2,3,4,5).sumFoldLeft
-  println(s" The sum using sumFoldLeft is ${assert(sumList == 15); sumList}")
+  val sumList = List(1, 2, 3, 4, 5).sumFoldLeft
+  println(s" The sum using sumFoldLeft is ${ assert(sumList == 15); sumList }")
 
-  val lengthFoldLeftList = List(1,2,3,4,5).lengthFoldLeft
-  println(s" The length using lengthFoldLeft is ${assert(lengthFoldLeftList == 5); lengthFoldLeftList}")
+  val lengthFoldLeftList = List(1, 2, 3, 4, 5).lengthFoldLeft
+  println(s" The length using lengthFoldLeft is ${ assert(lengthFoldLeftList == 5); lengthFoldLeftList }")
 
-  val productList = List(1,2,3,4,5).productFoldLeft
-  println(s" The length using productFoldLeft is ${assert(productList == 120); productList}")
+  val productList = List(1, 2, 3, 4, 5).productFoldLeft
+  println(s" The length using productFoldLeft is ${ assert(productList == 120); productList }")
 
-  val reverseList = List(1,2,3,4).reverse
+  val reverseList = List(1, 2, 3, 4).reverse
   println(s"The list reversed is $reverseList")
 
-  val mapList: List[String] = List(1,2,3,4).map(_.toString.concat("_wololo"))
+  val mapList: List[String] = List(1, 2, 3, 4).map(_.toString.concat("_wololo"))
   println(s"The list mapped to List[String] is $mapList")
 
-  val filterList: List[Int] = List(1,2,3,4).filter(_ % 2 == 1)
+  val filterList: List[Int] = List(1, 2, 3, 4).filter(_ % 2 == 1)
   println(s"The list filtered is $filterList")
 
-  val concatList: List[Int] = List(1,2,3,4).concat(List(1,2,3,4))
+  val concatList: List[Int] = List(1, 2, 3, 4).concat(List(1, 2, 3, 4))
   println(s"Concat result: $concatList")
 
-  val flatmaplist = List(1,2,3).flatMap(i => List(i,i))
-  println (s"flatmap result = $flatmaplist")
+  val flatmaplist = List(1, 2, 3).flatMap(i => List(i, i))
+  println(s"flatmap result = $flatmaplist")
 
-  val filterUsingFlatMapList = List(1,2,3,4).filterUsingFlatMap(_ % 2 == 1)
+  val filterUsingFlatMapList = List(1, 2, 3, 4).filterUsingFlatMap(_ % 2 == 1)
   println(s"The list filtered using flatmap is $filterUsingFlatMapList")
 
-  val zipWith = List(1,2,3,4).zipWith(List(1,2,3,4), _+_)
+  val zipWith = List(1, 2, 3, 4).zipWith(List(1, 2, 3, 4), _ + _)
   println(s"zipWithResult = $zipWith")
 
   /*
@@ -128,7 +128,7 @@ object Main extends App {
   println(s"the tree size (nodes + leafs) is $treeSize")
 
   val treeMax = tree1.maximum
-  println(s"the tree maximum is ${assert(treeMax == 3); treeMax}")
+  println(s"the tree maximum is ${ assert(treeMax == 3); treeMax }")
 
   /*
    *  +--------------------------------+
@@ -150,14 +150,13 @@ object Main extends App {
    *  +--------------------------------+
    *
    */
-  val tree2 = Tree(Branch(Branch(Branch(Branch(Leaf(5),Leaf(6)),Leaf(4)), Leaf(2)), Leaf(3)))
+  val tree2 = Tree(Branch(Branch(Branch(Branch(Leaf(5), Leaf(6)), Leaf(4)), Leaf(2)), Leaf(3)))
 
   val treeMaxDepth = tree2.depth
-  println(s"the tree maximum depth is ${assert(treeMaxDepth == 5); treeMaxDepth}")
+  println(s"the tree maximum depth is ${ assert(treeMaxDepth == 5); treeMaxDepth }")
 
-  val mappedTree = tree1.map(_+1)
+  val mappedTree = tree1.map(_ + 1)
   println(s"the mapped tree is $mappedTree")
-
 
   val treeSizeFold = tree1.sizeFold
   println(s"the tree size (nodes + leafs) sizeFold is $treeSizeFold")

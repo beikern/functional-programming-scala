@@ -63,7 +63,7 @@ sealed trait Tree[+A] {
   def fold[B](z: B)(f: (A, B) => B): B = {
     def go(t: Tree[A], acc: B): B = {
       t match {
-        case Leaf(l) => f(l, acc)
+        case Leaf(l)      => f(l, acc)
         case Branch(l, r) => go(l, go(r, acc))
       }
     }
