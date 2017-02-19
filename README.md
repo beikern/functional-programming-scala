@@ -6,6 +6,7 @@ They can be wrong, take them with a grain of salt.
 ## Chapters done ##
 
 - **Chapter 2**: Getting started.
+- **Chapter 3**: Functional Data Structures.
 
 ## License ##
 
