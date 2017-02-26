@@ -17,6 +17,8 @@
 package es.beikern.functional.programming.app
 
 import es.beikern.functional.programming.datatypes.{ Some, None }
+import es.beikern.functional.programming.datatypes.Option
+import es.beikern.functional.programming.app.Utils._
 
 object Main extends App {
 
@@ -35,4 +37,24 @@ object Main extends App {
   val filterResult = Some(10).filter(_ % 2 == 1)
   println(s"The filter result is $filterResult")
 
+  println(s"variance is ${variance(List(1.0, 2.0, 3.0))}")
+
+  /**
+    * Top secret formula for computing an annual car
+    * insurance premium from two key factors.
+    */
+  def insuranceRateQuote(age: Int, numberOfSpeedingTickets: Int): Double = {
+    (age + numberOfSpeedingTickets) / 2
+  }
+
+  def parseInsuranceRateQuote(age: String, numberOfSpeedingTickets: String): Option[Double] = {
+    val optAge: Option[Int]     = Try { age.toInt }
+    val optTickets: Option[Int] = Try { numberOfSpeedingTickets.toInt }
+    Option.map2(optAge, optTickets)(insuranceRateQuote)
+  }
+
+  println(s"the parseInsuranceRateQuote result is : ${parseInsuranceRateQuote("wololo", "10")}")
+  println(s"The option sequence result is ${Option.sequence(List(Some(1), Some(2), Some(3)))}")
+  println(
+    s"The traverse result with some None when evaluating the function is ${Option.traverse(List(1, 2, 3, 4))(a => if (a % 2 == 0) { Some(a) } else None)}")
 }
