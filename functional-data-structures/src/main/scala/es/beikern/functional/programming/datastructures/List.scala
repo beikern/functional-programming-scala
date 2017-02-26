@@ -202,7 +202,7 @@ sealed trait List[+A] {
 
   /*
    * Write a function flatMap that works like map except that the function given will return a list instead of a single result, and
-   * that list should be inserted into de final resulting list.
+   * that list should be inserted into the final resulting list.
    */
   def flatMap[B](f: A => List[B]): List[B] = {
     foldLeft(List[B]())((b, a) => b.concat(f(a)))
