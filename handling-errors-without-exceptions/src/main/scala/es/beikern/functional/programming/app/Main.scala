@@ -55,6 +55,7 @@ object Main extends App {
 
   println(s"the parseInsuranceRateQuote result is : ${parseInsuranceRateQuote("wololo", "10")}")
   println(s"The option sequence result is ${Option.sequence(List(Some(1), Some(2), Some(3)))}")
+  println(s"The option sequence result using traverse is ${Option.sequenceUsingTraverse(List(Some(1), Some(2), Some(3)))}")
   println(
     s"The traverse result with some None when evaluating the function is ${Option.traverse(List(1, 2, 3, 4))(a => if (a % 2 == 0) { Some(a) } else None)}")
 }

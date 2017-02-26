@@ -120,6 +120,9 @@ object Option {
     go(a, Some(List.empty))
   }
 
+  def sequenceUsingTraverse[A](a: List[Option[A]]): Option[List[A]] = {
+    traverse(a)(x => x)
+  }
 }
 
 case class Some[+A](get: A) extends Option[A]
