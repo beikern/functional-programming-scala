@@ -19,7 +19,7 @@ package es.beikern.functional.programming.app
 import es.beikern.functional.programming.datatypes.{ Some, None }
 import es.beikern.functional.programming.datatypes.Option
 import es.beikern.functional.programming.datatypes.Either
-import es.beikern.functional.programming.datatypes.{Right, Left}
+import es.beikern.functional.programming.datatypes.{ Right, Left }
 import es.beikern.functional.programming.app.Utils._
 
 object Main extends App {
@@ -50,7 +50,6 @@ object Main extends App {
 
   val eitherLeftMapResult = eitherLeft.map(_ + 1)
   println(s"The Either map left result is $eitherLeftMapResult")
-
 
   /**
     * Top secret formula for computing an annual car
