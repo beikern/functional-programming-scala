@@ -27,7 +27,7 @@ sealed trait Either[+E, +A] {
 
   def flatMap[EE >: E, B >: A](f: A => Either[EE, B]): Either[EE, B] = {
     this match {
-      case Right(a) => f(a)
+      case Right(a)    => f(a)
       case a @ Left(_) => a
     }
   }
@@ -35,14 +35,15 @@ sealed trait Either[+E, +A] {
   def orElse[EE >: E, B >: A](b: => Either[EE, B]): Either[EE, B] = {
     this match {
       case a @ Right(_) => a
-      case _ => b
+      case _            => b
     }
   }
 
   def map2[EE >: E, B, C](b: Either[EE, B])(f: (A, B) => C): Either[EE, C] = {
     (this, b) match {
-      case (Right(a), Right(bb)) => Right(f(a,b))
-      case (Left(a), _) => Left(a)
+      case (Right(a), Right(bb)) => Right(f(a, bb))
+      case (Right(_), Left(bb))  => Left(bb)
+      case (Left(a), _)          => Left(a)
     }
   }
 }
