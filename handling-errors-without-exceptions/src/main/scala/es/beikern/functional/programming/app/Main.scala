@@ -18,6 +18,8 @@ package es.beikern.functional.programming.app
 
 import es.beikern.functional.programming.datatypes.{ Some, None }
 import es.beikern.functional.programming.datatypes.Option
+import es.beikern.functional.programming.datatypes.Either
+import es.beikern.functional.programming.datatypes.{Right, Left}
 import es.beikern.functional.programming.app.Utils._
 
 object Main extends App {
@@ -38,6 +40,17 @@ object Main extends App {
   println(s"The filter result is $filterResult")
 
   println(s"variance is ${variance(List(1.0, 2.0, 3.0))}")
+
+  val eitherRight: Either[Boolean, Int] = Right(1)
+
+  val eitherRightMapResult = eitherRight.map(_ + 1)
+  println(s"The Either map right result is $eitherRightMapResult")
+
+  val eitherLeft: Either[Boolean, Int] = Left(false)
+
+  val eitherLeftMapResult = eitherLeft.map(_ + 1)
+  println(s"The Either map left result is $eitherLeftMapResult")
+
 
   /**
     * Top secret formula for computing an annual car
